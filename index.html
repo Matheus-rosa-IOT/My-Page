@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Rocha | Portfólio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488', // Destaque principal (Teal)
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        },
+                        surface: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'float': '0 10px 30px -5px rgba(13, 148, 136, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Utility classes for scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Active Nav Link Marker */
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #0d9488;
+            border-radius: 2px;
+            transform: scaleX(1);
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #0d9488;
+            border-radius: 2px;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Image Placeholder Fallback Style */
+        .img-fallback {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #e2e8f0;
+            color: #64748b;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-surface-50 text-slate-700 font-sans antialiased selection:bg-brand-200 selection:text-brand-900 overflow-x-hidden">
+
+    <!-- Navbar -->
+    <header class="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-200 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="font-display font-bold text-xl text-surface-900 tracking-tight flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center group-hover:bg-brand-700 transition-colors">MR</div>
+                <span class="hidden sm:block">Matheus Rocha</span>
+            </a>
+            
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex gap-8 items-center font-medium text-sm text-slate-600">
+                <a href="#home" class="nav-link relative hover:text-brand-600 transition-colors py-1">Home</a>
+                <a href="#formacao" class="nav-link relative hover:text-brand-600 transition-colors py-1">Formação</a>
+                <a href="#habilidades" class="nav-link relative hover:text-brand-600 transition-colors py-1">Habilidades</a>
+                <a href="#experiencia" class="nav-link relative hover:text-brand-600 transition-colors py-1">Experiência</a>
+                <a href="#interesses" class="nav-link relative hover:text-brand-600 transition-colors py-1">Interesses</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-slate-600 hover:text-brand-600 focus:outline-none" id="mobile-menu-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Nav (Hidden by default) -->
+        <div class="md:hidden hidden bg-white border-t border-surface-200 absolute w-full shadow-lg" id="mobile-menu">
+            <div class="flex flex-col px-6 py-4 space-y-4 font-medium text-slate-600">
+                <a href="#home" class="mobile-link hover:text-brand-600">Home</a>
+                <a href="#formacao" class="mobile-link hover:text-brand-600">Formação</a>
+                <a href="#habilidades" class="mobile-link hover:text-brand-600">Habilidades</a>
+                <a href="#experiencia" class="mobile-link hover:text-brand-600">Experiência</a>
+                <a href="#interesses" class="mobile-link hover:text-brand-600">Interesses</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home / Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-24 pb-12 relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-brand-100/50 rounded-full blur-3xl -z-10 translate-x-1/3"></div>
+        <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-100/40 rounded-full blur-3xl -z-10 -translate-x-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                
+                <!-- Left Content -->
+                <div class="reveal z-10 order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold tracking-wide uppercase mb-6 border border-brand-100">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                        </span>
+                        Estudante & Técnico
+                    </div>
+                    
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-surface-900 leading-[1.1] mb-6">
+                        Olá, sou o <br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-600">Matheus Rocha.</span>
+                    </h1>
+                    
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
+                        Estudante de Ciência e Tecnologia na UFMA e técnico em Eletrônica. Minha trajetória reúne experiências com manutenção eletrônica, hardware, programação e projetos de robótica e sistemas embarcados. Tenho interesse em desenvolver e compreender tecnologias que integram software e hardware.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <a href="assets/curriculo.pdf" target="_blank" class="px-6 py-3 bg-surface-900 text-white font-medium rounded-xl hover:bg-brand-600 transition-all duration-300 shadow-soft hover:shadow-float flex items-center gap-2">
+                            Acessar Currículo
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </a>
+                        <a href="#experiencia" class="px-6 py-3 bg-white text-surface-900 font-medium rounded-xl hover:bg-surface-50 transition-all duration-300 border border-surface-200 hover:border-brand-300">
+                            Ver Projetos
+                        </a>
+                        <div class="flex items-center gap-3 ml-2 border-l border-surface-200 pl-6">
+                            <a href="https://github.com/Matheus-rosa-IOT" target="_blank" class="text-slate-400 hover:text-brand-600 transition-colors" title="GitHub">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                            </a>
+                            <a href="http://www.linkedin.com/in/matheus-rosa-88ba50211" target="_blank" class="text-slate-400 hover:text-blue-600 transition-colors" title="LinkedIn">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content (Image) -->
+                <div class="reveal order-1 lg:order-2 flex justify-center lg:justify-end relative">
+                    <!-- Geometric Background Box -->
+                    <div class="absolute inset-0 bg-brand-600 rounded-3xl translate-x-4 translate-y-4 -z-10 hidden sm:block w-[90%] md:w-[400px] h-[500px] ml-auto"></div>
+                    
+                    <!-- Image Container -->
+                    <div class="relative w-full max-w-[400px] h-[400px] sm:h-[500px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-surface-200">
+                        <!-- Img Tag with fallback logic inline -->
+                        <img src="assets/images/perfil.jpg" 
+                             alt="Matheus Rocha" 
+                             class="w-full h-full object-cover z-10 relative"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <!-- Fallback Content (shows if image fails to load) -->
+                        <div class="absolute inset-0 hidden img-fallback p-8">
+                            <svg class="w-16 h-16 mb-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span class="font-display font-bold text-lg text-slate-500 block">Sua foto aqui</span>
+                            <span class="text-sm text-slate-400 mt-2">Salve sua foto em <br><code class="bg-slate-200 px-1 rounded text-xs">assets/images/perfil.jpg</code></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute bottom-10 -left-6 sm:-left-12 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
+                        <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-surface-900">Hardware & Software</p>
+                            <p class="text-xs text-slate-500">Integração de ponta a ponta</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formação -->
+    <section id="formacao" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-surface-900 mb-4">Trajetória Acadêmica</h2>
+                <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="reveal max-w-4xl mx-auto relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-[20px] md:left-1/2 md:-ml-[2px] top-0 bottom-0 w-1 bg-surface-200 rounded-full"></div>
+
+                <div class="space-y-12">
+                    <!-- Item 1 -->
+                    <div class="relative flex items-center justify-start md:justify-end md:w-1/2 md:ml-auto md:pl-12 pl-16 group">
+                        <div class="absolute left-0 md:-left-4 w-10 h-10 rounded-full bg-white border-4 border-brand-500 z-10 shadow-md group-hover:scale-110 transition-transform"></div>
+                        <div class="bg-surface-50 p-6 rounded-2xl shadow-soft border border-surface-100 w-full hover:shadow-md transition-shadow">
+                            <span class="text-brand-600 text-sm font-bold tracking-wider uppercase mb-1 block">Atualmente no 6º Período</span>
+                            <h3 class="font-display text-xl font-bold text-surface-900 mb-2">Bacharelado Interdisciplinar em Ciência e Tecnologia</h3>
+                            <p class="text-slate-600 font-medium mb-2">Universidade Federal do Maranhão (UFMA)</p>
+                            <p class="text-sm text-slate-500">Base sólida em ciências exatas e tecnologia, com forte interesse em prosseguir para a formação específica em <span class="font-semibold text-slate-700">Engenharia da Computação</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative flex items-center justify-start md:w-1/2 md:pr-12 pl-16 md:pl-0 group">
+                        <div class="absolute left-0 md:-right-4 w-10 h-10 rounded-full bg-white border-4 border-blue-500 z-10 shadow-md group-hover:scale-110 transition-transform"></div>
+                        <div class="bg-surface-50 p-6 rounded-2xl shadow-soft border border-surface-100 w-full hover:shadow-md transition-shadow text-left md:text-right">
+                            <span class="text-blue-600 text-sm font-bold tracking-wider uppercase mb-1 block">Formação Profissional</span>
+                            <h3 class="font-display text-xl font-bold text-surface-900 mb-2">Técnico em Eletrônica</h3>
+                            <p class="text-sm text-slate-500">Fundação técnica aprofundada envolvendo análise de circuitos, componentes eletrônicos, leitura de esquemáticos e compreensão prática da base material de sistemas embarcados.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative flex items-center justify-start md:justify-end md:w-1/2 md:ml-auto md:pl-12 pl-16 group">
+                        <div class="absolute left-0 md:-left-4 w-10 h-10 rounded-full bg-white border-4 border-slate-400 z-10 shadow-md group-hover:scale-110 transition-transform"></div>
+                        <div class="bg-surface-50 p-6 rounded-2xl shadow-soft border border-surface-100 w-full hover:shadow-md transition-shadow">
+                            <span class="text-slate-500 text-sm font-bold tracking-wider uppercase mb-1 block">Curso Livre</span>
+                            <h3 class="font-display text-xl font-bold text-surface-900 mb-2">Manutenção de Computadores</h3>
+                            <p class="text-sm text-slate-500">Treinamento prático inicial que despertou o interesse por arquitetura de hardware, diagnóstico e resolução de problemas técnicos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="habilidades" class="py-24 bg-surface-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-surface-900 mb-4">Habilidades Técnicas</h2>
+                    <div class="w-20 h-1 bg-brand-500 rounded-full"></div>
+                </div>
+                <p class="text-slate-500 max-w-sm md:text-right">Da manutenção do hardware ao código rodando no microcontrolador.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Categoria 1 -->
+                <div class="reveal bg-white p-8 rounded-3xl shadow-soft border border-surface-100 hover:-translate-y-1 hover:shadow-float transition-all duration-300">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-surface-900 mb-4">Programação</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">C</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">C++ <span class="text-xs bg-surface-100 text-slate-500 px-2 py-0.5 rounded-full ml-1">Em aprendizado</span></span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Java</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Lógica de programação</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Algoritmos</span></li>
+                    </ul>
+                </div>
+
+                <!-- Categoria 2 -->
+                <div class="reveal bg-white p-8 rounded-3xl shadow-soft border border-surface-100 hover:-translate-y-1 hover:shadow-float transition-all duration-300" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-surface-900 mb-4">Eletrônica & Embarcados</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Microcontroladores</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">ESP32 & Arduino</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Sensores e atuadores</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Comunicação entre dispositivos</span></li>
+                    </ul>
+                </div>
+
+                <!-- Categoria 3 -->
+                <div class="reveal bg-white p-8 rounded-3xl shadow-soft border border-surface-100 hover:-translate-y-1 hover:shadow-float transition-all duration-300" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-surface-900 mb-4">Hardware & TI</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Montagem e manutenção de PCs</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Diagnóstico de falhas</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Formatação e instalação de SO</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Suporte técnico preventivo e corretivo</span></li>
+                    </ul>
+                </div>
+
+                <!-- Categoria 4 -->
+                <div class="reveal bg-white p-8 rounded-3xl shadow-soft border border-surface-100 hover:-translate-y-1 hover:shadow-float transition-all duration-300">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-surface-900 mb-4">Robótica</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Construção de robôs seguidores de linha</span></li>
+                        <li class="flex items-start gap-3"><span class="text-brand-500 mt-1">✦</span> <span class="text-slate-600">Montagem e integração de componentes físicos</span></li>
+                    </ul>
+                </div>
+
+                <!-- Categoria 5 -->
+                <div class="reveal lg:col-span-2 bg-white p-8 rounded-3xl shadow-soft border border-surface-100 hover:-translate-y-1 hover:shadow-float transition-all duration-300" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 bg-slate-100 text-slate-700 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-surface-900 mb-4">Ferramentas Utilizadas</h3>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <span class="px-4 py-2 bg-surface-50 border border-surface-200 rounded-lg text-sm font-medium text-slate-700">Arduino IDE</span>
+                        <span class="px-4 py-2 bg-surface-50 border border-surface-200 rounded-lg text-sm font-medium text-slate-700">PlatformIO</span>
+                        <span class="px-4 py-2 bg-surface-50 border border-surface-200 rounded-lg text-sm font-medium text-slate-700">VS Code</span>
+                        <span class="px-4 py-2 bg-surface-50 border border-surface-200 rounded-lg text-sm font-medium text-slate-700">TunerStudio</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiência & Projetos -->
+    <section id="experiencia" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <!-- Experiência Profissional -->
+            <div class="mb-24">
+                <div class="reveal text-center mb-16">
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-surface-900 mb-4">Experiência</h2>
+                    <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+                </div>
+
+                <div class="space-y-8 max-w-4xl mx-auto">
+                    <!-- Exp 1 -->
+                    <div class="reveal bg-surface-50 border border-surface-100 p-8 rounded-3xl hover:border-brand-300 transition-colors">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
+                            <h3 class="font-display text-2xl font-bold text-surface-900">Técnico em Eletrônica</h3>
+                            <span class="text-sm font-semibold bg-white px-3 py-1 rounded-full border border-surface-200 text-slate-600">Julho de 2023 — Julho de 2025</span>
+                        </div>
+                        <p class="text-brand-600 font-medium mb-4">Equipar Eventos</p>
+                        <p class="text-slate-600 leading-relaxed">
+                            Manutenção preventiva e corretiva de equipamentos eletrônicos, sistemas de áudio profissional, painéis LED e iluminação para eventos. Atuação envolvendo diagnóstico preciso de falhas, reparos em componentes e atividades de organização técnica estrutural da empresa.
+                        </p>
+                    </div>
+
+                    <!-- Exp 2 -->
+                    <div class="reveal bg-surface-50 border border-surface-100 p-8 rounded-3xl hover:border-brand-300 transition-colors">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
+                            <h3 class="font-display text-2xl font-bold text-surface-900">Manutenção e Suporte de Computadores</h3>
+                            <span class="text-sm font-semibold bg-white px-3 py-1 rounded-full border border-surface-200 text-slate-600">Atuação Independente</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Experiência informal, mas prática e constante, com montagem e desmontagem de computadores desktop, formatação, instalação de sistemas operacionais, diagnóstico de problemas de hardware e software, manutenção preventiva e atendimento direto prestando suporte a usuários.
+                        </p>
+                    </div>
+
+                    <!-- Exp 3 -->
+                    <div class="reveal bg-surface-50 border border-surface-100 p-8 rounded-3xl hover:border-brand-300 transition-colors">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
+                            <h3 class="font-display text-2xl font-bold text-surface-900">Assistência de Equipamentos de Áudio</h3>
+                            <span class="text-sm font-semibold bg-white px-3 py-1 rounded-full border border-surface-200 text-slate-600">Estágio Técnico</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Experiência anterior focada na manutenção, diagnóstico e suporte técnico específico para equipamentos de áudio, fortalecendo a compreensão de diagramas elétricos e manuseio de ferramentas de bancada.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projetos em Destaque -->
+            <div class="mt-32">
+                <div class="reveal mb-12">
+                    <h3 class="font-display text-3xl font-bold text-surface-900 mb-2">Projetos em Destaque</h3>
+                    <p class="text-slate-500">Aplicações práticas de hardware e programação.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    
+                    <!-- Projeto 1: Robôs -->
+                    <div class="reveal group bg-white rounded-3xl border border-surface-200 overflow-hidden hover:shadow-float transition-all duration-300 flex flex-col">
+                        <div class="h-48 bg-surface-100 relative overflow-hidden flex items-center justify-center">
+                            <!-- Geometric placeholder pattern -->
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#0f766e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <svg class="w-12 h-12 text-slate-300 z-10 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-1 rounded-md">Robótica</span>
+                            </div>
+                            <h4 class="font-display text-2xl font-bold text-surface-900 mb-3">Robôs Seguidores de Linha</h4>
+                            <p class="text-slate-600 mb-6 flex-1 text-sm leading-relaxed">
+                                Construção prática de dois robôs seguidores de linha. O projeto envolveu integração de componentes eletrônicos, soldagem, montagem estrutural, programação de estratégias de controle (sensores e microcontroladores) e iterativa experimentação de lógica de navegação autônoma.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-surface-100">
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">Sensores</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">Microcontroladores</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">Lógica de Controle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projeto 2: Shell / Roots -->
+                    <div class="reveal group bg-white rounded-3xl border border-surface-200 overflow-hidden hover:shadow-float transition-all duration-300 flex flex-col" style="transition-delay: 100ms;">
+                        <div class="h-48 bg-surface-100 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#0f766e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <svg class="w-12 h-12 text-slate-300 z-10 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded-md">Eficiência Energética</span>
+                            </div>
+                            <h4 class="font-display text-2xl font-bold text-surface-900 mb-3">Shell Eco-marathon / IFMA Roots</h4>
+                            <p class="text-slate-600 mb-6 flex-1 text-sm leading-relaxed">
+                                Participação no desenvolvimento voltado para eficiência energética, envolvendo estudos práticos de eletrônica veicular e telemetria para otimização de performance em competições tecnológicas.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-surface-100">
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">Telemetria</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">Eletrônica Veicular</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projeto 3: Speeduino -->
+                    <div class="reveal group bg-white rounded-3xl border border-surface-200 overflow-hidden hover:shadow-float transition-all duration-300 flex flex-col">
+                        <div class="h-48 bg-surface-100 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#0f766e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <svg class="w-12 h-12 text-slate-300 z-10 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-2 py-1 rounded-md">Automotivo & Embarcados</span>
+                            </div>
+                            <h4 class="font-display text-2xl font-bold text-surface-900 mb-3">Speeduino</h4>
+                            <p class="text-slate-600 mb-6 flex-1 text-sm leading-relaxed">
+                                Projeto de gerenciamento eletrônico de motor (ECU open-source). Compreensão profunda da interação entre hardware (leitura de sensores, atuação de bicos e ignição) e parametrização de software via TunerStudio.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-surface-100">
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">TunerStudio</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">Arduino</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">ECU</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projeto 4: ESP32 -->
+                    <div class="reveal group bg-white rounded-3xl border border-surface-200 overflow-hidden hover:shadow-float transition-all duration-300 flex flex-col" style="transition-delay: 100ms;">
+                        <div class="h-48 bg-surface-100 relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#0f766e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <svg class="w-12 h-12 text-slate-300 z-10 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-md">IoT & Conectividade</span>
+                            </div>
+                            <h4 class="font-display text-2xl font-bold text-surface-900 mb-3">Experimentos com ESP32</h4>
+                            <p class="text-slate-600 mb-6 flex-1 text-sm leading-relaxed">
+                                Desenvolvimento e prototipação explorando as capacidades de rede (Wi-Fi/Bluetooth) do ESP32. Criação de soluções voltadas para Internet das Coisas (IoT), aquisição de dados e controle remoto de atuadores.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-surface-100">
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">ESP32</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">C++</span>
+                                <span class="text-xs font-medium text-slate-500 bg-surface-100 px-2 py-1 rounded">IoT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interesses & Atividades Extras -->
+    <section id="interesses" class="py-24 bg-surface-800 text-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-600/20 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 z-10 relative">
+            <div class="reveal mb-16">
+                <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Interesses & Atividades</h2>
+                <div class="w-20 h-1 bg-brand-500 rounded-full"></div>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[160px]">
+                
+                <!-- Interesse: Integração -->
+                <div class="reveal col-span-1 md:col-span-2 row-span-1 bg-surface-900/50 backdrop-blur-sm border border-surface-700 rounded-3xl p-6 flex flex-col justify-center hover:bg-surface-700 transition-colors">
+                    <h3 class="font-display text-xl font-bold mb-2">Integração Hardware-Software</h3>
+                    <p class="text-slate-400 text-sm">Onde a lógica do código encontra a física do mundo real.</p>
+                </div>
+
+                <!-- OBR Highlight -->
+                <div class="reveal col-span-1 md:col-span-2 lg:col-span-2 row-span-2 bg-brand-900/40 border border-brand-700/50 rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="w-24 h-24 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <div class="relative z-10 h-full flex flex-col">
+                        <span class="inline-block bg-brand-600/30 text-brand-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full w-max mb-4">Atividade Extracurricular</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">Árbitro — OBR 2026</h3>
+                        <p class="text-brand-200 text-sm mb-4">Olimpíada Brasileira de Robótica | São Luís, MA</p>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4 flex-1">
+                            Atuação como árbitro, contribuindo ativamente para a realização da competição. Experiência enriquecedora de imersão na comunidade educacional e contato direto com projetos criativos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tag block -->
+                <div class="reveal col-span-1 row-span-1 bg-surface-900/50 backdrop-blur-sm border border-surface-700 rounded-3xl p-6 flex flex-col justify-center items-center text-center hover:bg-surface-700 transition-colors">
+                    <svg class="w-8 h-8 mb-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    <h3 class="font-display font-bold">Programação</h3>
+                </div>
+
+                <!-- Tag block -->
+                <div class="reveal col-span-1 row-span-1 bg-surface-900/50 backdrop-blur-sm border border-surface-700 rounded-3xl p-6 flex flex-col justify-center items-center text-center hover:bg-surface-700 transition-colors">
+                    <svg class="w-8 h-8 mb-2 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                    <h3 class="font-display font-bold">Sistemas Embarcados</h3>
+                </div>
+
+                <!-- Double block -->
+                <div class="reveal col-span-1 md:col-span-2 lg:col-span-2 row-span-1 bg-gradient-to-br from-surface-900 to-surface-800 border border-surface-700 rounded-3xl p-6 flex items-center justify-between group overflow-hidden relative">
+                    <div class="relative z-10">
+                        <h3 class="font-display text-xl font-bold mb-1">Engenharia da Computação & Automação</h3>
+                        <p class="text-slate-400 text-sm">Foco do desenvolvimento acadêmico e futuro profissional.</p>
+                    </div>
+                    <svg class="w-10 h-10 text-surface-600 group-hover:text-brand-400 transition-colors z-10 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé & Contato -->
+    <footer class="bg-surface-900 border-t border-surface-800 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            
+            <div class="text-center md:text-left">
+                <a href="#home" class="font-display font-bold text-2xl text-white mb-2 block">Matheus Rocha</a>
+                <p class="text-sm">Desenvolvendo a ponte entre o hardware e o software.</p>
+            </div>
+            
+            <div class="flex gap-6">
+                <a href="mailto:mvr03925@gmail.com" class="hover:text-white transition-colors p-2 bg-surface-800 rounded-full hover:bg-brand-600" aria-label="Email">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </a>
+                <a href="http://www.linkedin.com/in/matheus-rosa-88ba50211" target="_blank" class="hover:text-white transition-colors p-2 bg-surface-800 rounded-full hover:bg-blue-600" aria-label="LinkedIn">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"></path></svg>
+                </a>
+                <a href="https://github.com/Matheus-rosa-IOT" target="_blank" class="hover:text-white transition-colors p-2 bg-surface-800 rounded-full hover:bg-slate-700" aria-label="GitHub">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+
+            <div class="text-center md:text-right">
+                <a href="assets/curriculo.pdf" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors">
+                    Baixar Currículo (PDF)
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                </a>
+            </div>
+            
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu on link click
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // 2. Scroll Animation (Reveal Elements)
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: unobserve after revealing if you don't want it to repeat
+                        // revealObserver.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 3. Active Navigation Link Update on Scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const navBar = document.getElementById('navbar');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                // Add shadow to navbar on scroll
+                if(window.scrollY > 10) {
+                    navBar.classList.add('shadow-sm');
+                } else {
+                    navBar.classList.remove('shadow-sm');
+                }
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Adjusted offset for fixed header
+                    if (pageYOffset >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    link.classList.remove('text-brand-600');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                        link.classList.add('text-brand-600');
+                    }
+                });
+            });
+            
+            // Trigger scroll event once on load to set initial state
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>
